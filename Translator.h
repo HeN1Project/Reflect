@@ -136,6 +136,11 @@ namespace Helium
 				Float32,
 				Float64,
 				String,
+            // HEN1
+				ComplexFloat32,
+				ComplexFloat64,
+            // TODO : ComplexFloat128,
+
 			};
 		}
 		typedef ScalarTypes::MetaType ScalarType;
@@ -196,7 +201,7 @@ namespace Helium
 		{
 		public:
 			HELIUM_META_DERIVED( MetaIds::SetTranslator, SetTranslator, ContainerTranslator );
-			
+
 			inline SetTranslator( size_t size );
 
 			virtual Translator* GetItemTranslator() const = 0;
@@ -216,7 +221,7 @@ namespace Helium
 		{
 		public:
 			HELIUM_META_DERIVED( MetaIds::SequenceTranslator, SequenceTranslator, ContainerTranslator );
-			
+
 			inline SequenceTranslator( size_t size );
 
 			virtual Translator* GetItemTranslator() const = 0;
@@ -240,7 +245,7 @@ namespace Helium
 		{
 		public:
 			HELIUM_META_DERIVED( MetaIds::AssociationTranslator, AssociationTranslator, ContainerTranslator );
-			
+
 			inline AssociationTranslator( size_t size );
 
 			virtual ScalarTranslator* GetKeyTranslator() const = 0;

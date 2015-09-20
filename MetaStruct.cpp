@@ -58,7 +58,8 @@ bool Field::ShouldSerialize( void* address, Object* object, uint32_t index ) con
 		return true;
 	}
 
-	return !IsDefaultValue( address, object, index );
+	return true;// HEN1 TODO, FieldFlags::Force !IsDefaultValue( address, object, index );
+
 }
 
 MetaStruct::MetaStruct()
@@ -207,7 +208,7 @@ void MetaStruct::Copy( void* compositeSource, Object* objectSource, void* compos
 					Pointer pointerDestination ( field, compositeDestination, objectDestination, i );
 
 					// for normal data types, run overloaded assignement operator via data's vtable
-					// for reference container types, this deep copies containers (which is bad for 
+					// for reference container types, this deep copies containers (which is bad for
 					//  non-cloneable (FieldFlags::Share) reference containers)
 					field->m_Translator->Copy(pointerSource, pointerDestination, shallowCopy || (field->m_Flags & FieldFlags::Share) ? CopyFlags::Shallow : 0);
 				}

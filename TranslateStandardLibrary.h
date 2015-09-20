@@ -2,6 +2,19 @@
 
 #include "Reflect/TranslateBuiltin.h"
 
+// HEN1
+#ifndef _TYPEDEF_COMPLEX_FLOAT_
+#define _TYPEDEF_COMPLEX_FLOAT_
+
+#include <complex>
+
+typedef std::complex<float32_t>   complex_float_t;
+typedef std::complex<float64_t>   complex_double_t;
+typedef std::complex<long double> complex_long_double_t;
+
+#endif
+
+
 namespace Helium
 {
 	namespace Reflect
@@ -30,6 +43,69 @@ namespace Helium
 		{
 			return new StlStringTranslator;
 		}
+
+
+		class HELIUM_REFLECT_API StlComplexFloat32Translator : public ScalarTranslator
+		{
+		public:
+			StlComplexFloat32Translator();
+			virtual void Construct( Pointer pointer ) HELIUM_OVERRIDE;
+			virtual void Destruct( Pointer pointer ) HELIUM_OVERRIDE;
+			virtual void Copy( Pointer src, Pointer dest, uint32_t flags ) HELIUM_OVERRIDE;
+			virtual bool Equals( Pointer a, Pointer b ) HELIUM_OVERRIDE;
+			virtual void Print( Pointer pointer, String& string, ObjectIdentifier* identifier ) HELIUM_OVERRIDE;
+			virtual void Parse( const String& string, Pointer pointer, ObjectResolver* resolver, bool raiseChanged ) HELIUM_OVERRIDE;
+		};
+
+
+		inline const MetaType* DeduceKeyType( const std::complex<float32_t>&, const std::complex<float32_t>& )
+		{
+			return NULL;
+		}
+
+
+		inline const MetaType* DeduceValueType( const std::complex<float32_t>&, const std::complex<float32_t>& )
+		{
+			return NULL;
+		}
+
+
+		inline Translator* AllocateTranslator( const std::complex<float32_t>&, const std::complex<float32_t>& )
+		{
+			return new StlComplexFloat32Translator();
+		}
+
+		class HELIUM_REFLECT_API StlComplexFloat64Translator : public ScalarTranslator
+		{
+		public:
+			StlComplexFloat64Translator();
+			virtual void Construct( Pointer pointer ) HELIUM_OVERRIDE;
+			virtual void Destruct( Pointer pointer ) HELIUM_OVERRIDE;
+			virtual void Copy( Pointer src, Pointer dest, uint32_t flags ) HELIUM_OVERRIDE;
+			virtual bool Equals( Pointer a, Pointer b ) HELIUM_OVERRIDE;
+			virtual void Print( Pointer pointer, String& string, ObjectIdentifier* identifier ) HELIUM_OVERRIDE;
+			virtual void Parse( const String& string, Pointer pointer, ObjectResolver* resolver, bool raiseChanged ) HELIUM_OVERRIDE;
+		};
+
+
+		inline const MetaType* DeduceKeyType( const std::complex<float64_t>&, const std::complex<float64_t>& )
+		{
+			return NULL;
+		}
+
+
+		inline const MetaType* DeduceValueType( const std::complex<float64_t>&, const std::complex<float64_t>& )
+		{
+			return NULL;
+		}
+
+
+		inline Translator* AllocateTranslator( const std::complex<float64_t>&, const std::complex<float64_t>& )
+		{
+			return new StlComplexFloat64Translator();
+		}
+        // } HEN1
+
 
 		template <class T>
 		class SimpleStlVectorTranslator : public SequenceTranslator
@@ -64,7 +140,7 @@ namespace Helium
 
 			Translator* m_InternalTranslator;
 		};
-		
+
 		template <class T>
 		inline const MetaType* DeduceKeyType( const std::vector<T>&, const std::vector<T>& )
 		{
@@ -110,7 +186,7 @@ namespace Helium
 		private:
 			Translator* m_InternalTranslator;
 		};
-		
+
 		template <class T>
 		inline const MetaType* DeduceKeyType( const std::set<T>&, const std::set<T>& )
 		{
@@ -158,7 +234,7 @@ namespace Helium
 			ScalarTranslator*   m_InternalTranslatorKey;
 			Translator*         m_InternalTranslatorValue;
 		};
-		
+
 		template <class KeyT, class ValueT>
 		inline const MetaType* DeduceKeyType( const std::map<KeyT, ValueT>&, const std::map<KeyT, ValueT>& )
 		{
